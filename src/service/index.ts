@@ -155,12 +155,12 @@ class HaloService {
         }
         
         // url
-      let urlsMatch; 
-      if (matterData?.url) {
-        const oldlinks = params.post.status.permalink.split("/").pop() || undefined;
-        const newlink = matterData.url.split("/").pop();
-        urlsMatch = oldlinks == newlink; 
-      } 
+        let urlsMatch; 
+        if (matterData?.url) {
+            const oldlinks = decodeURIComponent(params.post.status.permalink.split("/").pop() || "");
+            const newlink = matterData.url.split("/").pop();
+            urlsMatch = oldlinks == newlink;
+        }
       
       
         // add publishTime
