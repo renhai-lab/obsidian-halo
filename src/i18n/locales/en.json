@@ -80,8 +80,8 @@
   },
   "service": {
     "error_site_not_match": "Site URL does not match",
-    "error_publish_failed": "Publishing failed, please retry",
-    "notice_publish_success": "Published successfully",
+    "error_publish_failed": "'{{title}}' Publishing failed, please retry",
+    "notice_publish_success": "'{{title}}' Published successfully",
     "error_not_published": "This document is not published to Halo yet",
     "error_post_not_found": "Post does not exist",
     "invalid_slug_format": "Invalid slug format",

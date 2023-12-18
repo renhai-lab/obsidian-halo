@@ -246,7 +246,7 @@ class HaloService {
 
             params = (await this.getPost(params.post.metadata.name)) || params;
         } catch (error) {
-            new Notice(i18next.t("service.error_publish_failed"));
+            new Notice(i18next.t("service.error_publish_failed", {title: params.post.spec.title}));
             return;
         }
 
@@ -282,7 +282,7 @@ class HaloService {
         
 
         
-        new Notice(i18next.t("service.notice_publish_success"));
+        new Notice(i18next.t("service.notice_publish_success", {title: params.post.spec.title}));
     }
 
     public async getCategories(): Promise<Category[]> {
