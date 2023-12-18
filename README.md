@@ -1,13 +1,25 @@
 # Obsidian plugin for Halo
 
+This category fork from [obsidian-halo](https://github.com/halo-sigs/obsidian-halo), add some some metadata:
+- excerpt str
+- url str
+- halo.slug str
+- halo.cover str only support public accessible image url
+- halo.publishTime str YYYY-MM-DDTHH:mm:ssZ
+- halo.pinned bool
+
+**attention: Don't switch to a new tag in obsidian until you successfully publish(or pull/update) the article.**
+
 This plugin allows you to publish your Obsidian documents to [Halo](https://github.com/halo-dev/halo).
 
 [中文文档](./README.zh-CN.md)
 
 ## Installation
 
-1. Search for "Halo" in Obsidian's community plugins browser.
-2. Click **Install**.
+~~1. Search for "Halo" in Obsidian's community plugins browser.~~
+~~2. Click **Install**.~~
+
+Refer to the development section for manual installation.
 
 ## TODO
 
