@@ -356,11 +356,15 @@ class HaloService {
             new Notice(i18next.t("service.error_post_not_found"));
             return;
         }
+
         const postCategories = await this.getCategoryDisplayNames(post.post.spec.categories);
         const postTags = await this.getTagDisplayNames(post.post.spec.tags);
         const postSlug = post.post.spec.slug;
         // 增加halo自动生成的url
         const postUrl = generatePostUrl(this.site.url, postSlug);
+        
+        const file = await this.app.vault.create(`${post.post.spec.title}.md`, post.content.raw + "");
+        this.app.workspace.getLeaf().openFile(file);
 
         this.app.fileManager.processFrontMatter(file, (frontmatter) => {
             frontmatter.title = post.post.spec.title;
