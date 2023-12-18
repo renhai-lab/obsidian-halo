@@ -83,7 +83,10 @@
     "error_publish_failed": "Publishing failed, please retry",
     "notice_publish_success": "Published successfully",
     "error_not_published": "This document is not published to Halo yet",
-    "error_post_not_found": "Post does not exist"
+    "error_post_not_found": "Post does not exist",
+    "invalid_slug_format": "Invalid slug format",
+    "invalid_publish_time_format": "Invalid publish time format, please use YYYY-MM-DDTHH:mm:ssZ",
+    "url_only_read": "The URL of this document is read-only, please edit slug instead"
   },
   "common": {
     "error_connection_failed": "Connection failed",
