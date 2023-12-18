@@ -99,7 +99,12 @@ class HaloService {
             const post = await this.getPost(matterData.halo.name);
             params = post ? post : params;
         }
-
+        
+        // 确保params.content已经初始化
+        if (!params.content) {
+            params.content = { raw: '', content: '' };
+        }
+        
         params.content.raw = raw;
         params.content.content = new MarkdownIt({
             html: true,
@@ -156,8 +161,8 @@ class HaloService {
         
         // url
         let urlsMatch; 
-        if (matterData?.url) {
-            const oldlinks = decodeURIComponent(params.post.status.permalink.split("/").pop() || "");
+        if (matterData?.url && params.post.status) {
+            const oldlinks = decodeURIComponent(params.post.status.permalink!.split("/").pop() || "");
             const newlink = matterData.url.split("/").pop();
             urlsMatch = oldlinks == newlink;
         }
@@ -320,33 +325,36 @@ class HaloService {
         if (!post) {
             new Notice(i18next.t("service.error_post_not_found"));
             return;
-        }
-        // 更新文章的基本信息: 文章分类和标签
-        const postCategories = await this.getCategoryDisplayNames(post.post.spec.categories);
-        const postTags = await this.getTagDisplayNames(post.post.spec.tags);
-        const postSlug = post.post.spec.slug;
-        // 增加halo自动生成的url
-        const postUrl = generatePostUrl(this.site.url, postSlug);
+        } else {
+            // 更新文章的基本信息: 文章分类和标签
+            const postCategories = await this.getCategoryDisplayNames(post.post.spec.categories);
+            const postTags = await this.getTagDisplayNames(post.post.spec.tags);
+            const postSlug = post.post.spec.slug;
+            // 增加halo自动生成的url
+            const postUrl = generatePostUrl(this.site.url, postSlug);
 
-        // 更新文章的内容
-        await this.app.vault.modify(activeEditor.file, post.content.raw + "");
-        // 更新文章的前置元数据
-        this.app.fileManager.processFrontMatter(activeEditor.file, (frontmatter) => {
-            frontmatter.title = post.post.spec.title;
-            frontmatter.categories = postCategories;
-            frontmatter.tags = postTags;
-            frontmatter.excerpt = post.post.spec.excerpt.raw;
-            frontmatter.url = postUrl;
-            frontmatter.halo = {
-                site: this.site.url,
-                name: post.post.metadata.name,
-                slug: post.post.spec.slug,
-                cover: post.post.spec.cover,
-                publish: post.post.spec.publish,
-                publishTime: post.post.spec.publishTime,
-                pinned: post.post.spec.pinned,
-            };
-        });
+            // 更新文章的内容
+            await this.app.vault.modify(activeEditor.file, post.content!.raw + "");
+            
+            // 更新文章的前置元数据
+            this.app.fileManager.processFrontMatter(activeEditor.file, (frontmatter) => {
+                frontmatter.title = post.post.spec.title;
+                frontmatter.categories = postCategories;
+                frontmatter.tags = postTags;
+                frontmatter.excerpt = post.post.spec.excerpt.raw;
+                frontmatter.url = postUrl;
+                frontmatter.halo = {
+                    site: this.site.url,
+                    name: post.post.metadata.name,
+                    slug: post.post.spec.slug,
+                    cover: post.post.spec.cover,
+                    publish: post.post.spec.publish,
+                    publishTime: post.post.spec.publishTime,
+                    pinned: post.post.spec.pinned,
+                };
+            });
+        }
+        
     }
 
     public async pullPost(name: string): Promise<void> {
@@ -355,34 +363,36 @@ class HaloService {
         if (!post) {
             new Notice(i18next.t("service.error_post_not_found"));
             return;
+        } else {
+            const postCategories = await this.getCategoryDisplayNames(post.post.spec.categories);
+            const postTags = await this.getTagDisplayNames(post.post.spec.tags);
+            const postSlug = post.post.spec.slug;
+            // 增加halo自动生成的url
+            const postUrl = generatePostUrl(this.site.url, postSlug);
+    
+            const file = await this.app.vault.create(`${post.post.spec.title}.md`, post.content!.raw + "");
+    
+            this.app.workspace.getLeaf().openFile(file);
+    
+            this.app.fileManager.processFrontMatter(file, (frontmatter) => {
+                frontmatter.title = post.post.spec.title;
+                frontmatter.categories = postCategories;
+                frontmatter.tags = postTags;
+                frontmatter.excerpt = post.post.spec.excerpt.raw;
+                frontmatter.url = postUrl;
+                frontmatter.halo = {
+                    site: this.site.url,
+                    name: post.post.metadata.name,
+                    slug: postSlug,
+                    cover: post.post.spec.cover,
+                    publish: post.post.spec.publish,
+                    publishTime: post.post.spec.publishTime,
+                    pinned: post.post.spec.pinned,
+                };
+            });
         }
-
-        const postCategories = await this.getCategoryDisplayNames(post.post.spec.categories);
-        const postTags = await this.getTagDisplayNames(post.post.spec.tags);
-        const postSlug = post.post.spec.slug;
-        // 增加halo自动生成的url
-        const postUrl = generatePostUrl(this.site.url, postSlug);
-        
-        const file = await this.app.vault.create(`${post.post.spec.title}.md`, post.content.raw + "");
-        this.app.workspace.getLeaf().openFile(file);
-
-        this.app.fileManager.processFrontMatter(file, (frontmatter) => {
-            frontmatter.title = post.post.spec.title;
-            frontmatter.categories = postCategories;
-            frontmatter.tags = postTags;
-            frontmatter.excerpt = post.post.spec.excerpt.raw;
-            frontmatter.url = postUrl;
-            frontmatter.halo = {
-                site: this.site.url,
-                name: post.post.metadata.name,
-                slug: postSlug,
-                cover: post.post.spec.cover,
-                publish: post.post.spec.publish,
-                publishTime: post.post.spec.publishTime,
-                pinned: post.post.spec.pinned,
-            };
-        });
     }
+
 
     public async getCategoryNames(displayNames: string[]): Promise<string[]> {
         // 获取所有分类
