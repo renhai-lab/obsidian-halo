@@ -514,7 +514,7 @@ function isValidPublishTime(publishTime: string): boolean {
 }
 
 function isValidSlug(slug: string): boolean {
-    const slugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+    const slugRegex = /^[a-zA-Z0-9\u4e00-\u9fa5.]+(?:-[a-zA-Z0-9\u4e00-\u9fa5.]+)*$/;
     return slugRegex.test(slug);
 }
 
