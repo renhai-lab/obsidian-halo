@@ -1,7 +1,7 @@
 {
-  "name": "@halo-dev/obsidian-halo",
+  "name": "@renhai-lab/obsidian-halo",
   "private": true,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Halo's Obsidian integration supports publishing content to Halo sites",
   "main": "main.js",
   "scripts": {
@@ -11,12 +11,12 @@
     "lint": "eslint ./src --ext .js,.cjs,.mjs,.ts,.cts,.mts --ignore-path .gitignore",
     "prettier": "prettier --write './src/**/*.{js,ts,css,json,ml,yaml,html}'"
   },
-  "author": "@halo-dev",
+  "author": "renhailab",
   "maintainers": [
     {
-      "name": "Ryan Wang",
-      "email": "i@ryanc.cc",
-      "url": "https://github.com/ruibaby"
+      "name": "renhailab",
+      "email": "renhailab@163.com",
+      "url": "https://github.com/renhai-lab/obsidian-halo"
     }
   ],
   "license": "MIT",
