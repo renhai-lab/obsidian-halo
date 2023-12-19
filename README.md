@@ -1,6 +1,6 @@
 # Obsidian plugin for Halo
 
-This category fork from [obsidian-halo](https://github.com/halo-sigs/obsidian-halo), add some some metadata:
+This repository fork from [obsidian-halo](https://github.com/halo-sigs/obsidian-halo), add some some metadata:
 - excerpt str
 - url str
 - halo.slug str
@@ -10,7 +10,7 @@ This category fork from [obsidian-halo](https://github.com/halo-sigs/obsidian-ha
 
 **attention: Don't switch to a new tag in obsidian until you successfully publish(or pull/update) the article.**
 
-This plugin allows you to publish your Obsidian documents to [Halo](https://github.com/halo-dev/halo).
+The plugin can synchronize articles between Obsidian and [Halo](https://github.com/halo-dev/halo).
 
 [中文文档](./README.zh-CN.md)
 
