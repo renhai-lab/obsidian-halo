@@ -1,8 +1,8 @@
 {
   "name": "@renhai-lab/obsidian-halo",
   "private": true,
-  "version": "1.0.2",
-  "description": "Halo's Obsidian integration supports publishing content to Halo sites",
+  "version": "1.0.3",
+  "description": "The plugin can synchronize articles between Obsidian and Halo.",
   "main": "main.js",
   "scripts": {
     "dev": "node esbuild.config.mjs",

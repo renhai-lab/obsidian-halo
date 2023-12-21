@@ -1,9 +1,9 @@
 {
   "id": "halo-sync",
   "name": "Personal-halo-sync",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "minAppVersion": "0.15.0",
-  "description": "Halo's Obsidian integration supports syncthing content to Halo sites",
+  "description": "The plugin can synchronize articles between Obsidian and Halo.",
   "author": "renhai-lab",
   "authorUrl": "https://github.com/renhai-lab",
   "isDesktopOnly": false
